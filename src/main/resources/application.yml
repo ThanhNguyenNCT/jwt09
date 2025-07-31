@@ -1,0 +1,14 @@
+server:
+    port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/uniclub09
+    username: root
+    password: admin123
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+jwt:
+  private-key: W5Qi1VGhjbOVWdDuo2IJGJQiI1FuRsvV1m6X2Lhals4=
