@@ -1,0 +1,42 @@
+import mysql.connector
+import random
+
+# Kết nối đến cơ sở dữ liệu
+conn = mysql.connector.connect(
+    host='localhost',        # Địa chỉ máy chủ MySQL
+    port=3307,               # Cổng MySQL
+    user='root',             # Tên người dùng MySQL
+    password='admin123',     # Mật khẩu MySQL
+    database='uniclub09'     # Tên cơ sở dữ liệu
+)
+cursor = conn.cursor()
+
+# Thêm 100 sản phẩm vào bảng product
+for i in range(1, 1001):  # 100 sản phẩm
+    product_name = f"Áo sơ mi {i}"
+    description = f"Áo sơ mi thiết kế hiện đại{i}."
+    price = random.randint(10, 100)
+    cursor.execute("INSERT INTO product (name, description, price) VALUES (%s, %s, %s)",
+                   (product_name, description, price))
+    # conn.commit()
+    print(f"Add product {i}")
+
+
+# Lấy id của các sản phẩm vừa thêm
+conn.commit()  # Commit các thay đổi sau khi chèn vào bảng product
+
+# Thêm biến thể cho mỗi sản phẩm
+for product_id in range(1, 1001):  # Đảm bảo id_product trong range từ 1 đến 100
+    color_id = random.randint(1, 3)
+    size_id = random.randint(1, 3)
+    quantity = random.randint(1, 50)
+    price = random.randint(10, 1000)
+    cursor.execute("INSERT INTO variant (id_product, id_color, id_size, images, quantity, price) VALUES (%s, %s, %s, %s, %s, %s)",
+                   (product_id, color_id, size_id, 'item2.jpg', quantity, price))
+
+# Commit các thay đổi và đóng kết nối
+conn.commit()
+cursor.close()
+conn.close()
+
+print("eeeeeeeeeeeee")
