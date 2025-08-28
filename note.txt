@@ -1,0 +1,9 @@
+3 cách up load file lên server
+ - băm file ra mảng byte rồi lưu vào cơ sở dữ liệu --> đéo ai xài(bảo mật cx như mấy th kìa) vì k phải db nào
+ cx hỗ trợ lưu trữ mảng, dữ liệu lớn, tốc độ truy xuất chậm, db chết đồng nghĩa mất dữ liệu
+ - Băm về dạng byte xong mã hóa base64 rồi lưu vào cơ sở dữ liệu, lưu ổ đĩa cx đc --> xài cx khá nhiều, tốn bộ nhớ nhiều
+ , khắc phục đc kiểu byte, lưu đc chuỗi, nhiều db hõ trợ, vì đc up lên string nên dễ mã hóa hơn(json)
+  bao gồm cả data --> linh động hơn lưu trữ đc 2 nơi, nhưng tăng kích thước dữ liệu
+ - Copy file và lưu trữ trong ổ đĩa --> dùng nhiều nhất vì tốc độ truy xuất nhanh, dễ quản lý, bảo mật tốt hơn,
+  dễ backup, dễ phục hồi nhưng phải quản lý file trên ổ đĩa, nếu ổ đĩa hỏng thì mất dữ liệu. Trong db chỉ cần lưu
+đường dẫn đến file là đc, nếu cần thì đọc file từ ổ đĩa ra.

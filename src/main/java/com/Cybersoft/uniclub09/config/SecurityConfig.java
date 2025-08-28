@@ -38,10 +38,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthorizationFilter authorizationFilter) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/auth/*").permitAll() // Allow POST requests to /auth/signin
-                .anyRequest().authenticated() // All other requests require authentication
-            )
+            .authorizeHttpRequests(request -> {
+                request.requestMatchers("/auth/*").permitAll();
+                request.requestMatchers("/files/*").permitAll();
+                request.requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN");// Only allow ADMIN role to create products
+                request.requestMatchers(HttpMethod.GET, "/products").permitAll();
+                request.anyRequest().authenticated(); // Require authentication for all other requests
+            })
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
 

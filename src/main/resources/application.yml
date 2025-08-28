@@ -9,6 +9,12 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 jwt:
   private-key: W5Qi1VGhjbOVWdDuo2IJGJQiI1FuRsvV1m6X2Lhals4=
+file:
+  root-path: C:\CyberSoft\uniclub09\files\images

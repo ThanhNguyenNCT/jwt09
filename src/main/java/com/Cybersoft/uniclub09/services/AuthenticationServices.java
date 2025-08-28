@@ -1,5 +1,6 @@
 package com.Cybersoft.uniclub09.services;
 
 public interface AuthenticationServices {
-    boolean checkLogin(String email, String password);
+    String checkLogin(String email, String password);
+    void signup(String email, String password, String fullName);
 }

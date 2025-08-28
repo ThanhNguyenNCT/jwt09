@@ -16,9 +16,9 @@ public class JWTHelper {
 
     @Value("${jwt.private-key}")
     private String secretKey;
-    private final long timeExpiration = 15 * 60 * 1000; // 15 minutes
+    private final long timeExpiration = 60 * 60 * 1000; // 60 minutes
     public String generateToken(String data) {
-        System.out.println("Secret Key: " + secretKey);
+//        System.out.println("Secret Key: " + secretKey);
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         Date currentDate = new Date();
         Date expirationDate = new Date(currentDate.getTime() + timeExpiration); // 15 minutes expiration

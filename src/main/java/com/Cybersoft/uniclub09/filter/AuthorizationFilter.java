@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,14 +32,17 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
 
-            System.out.println("Authorization Token: " + token);
+//            System.out.println("Authorization Token: " + token);
             String data = jwtHelper.decodeToken(token);
-            System.out.println("Decoded Data: " + data);
+//            System.out.println("Decoded Data: " + data);
             if(data != null && !data.isEmpty()){
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
 
+                List<GrantedAuthority> authorities = new ArrayList<>();
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(data);
+                authorities.add(authority);
                 UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken("", "", List.of());
+                        new UsernamePasswordAuthenticationToken("", "",authorities);
                 securityContext.setAuthentication(authenticationToken);
                 SecurityContextHolder.setContext(securityContext);
             }
